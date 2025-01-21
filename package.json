@@ -10,6 +10,20 @@
     "test": "jest"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.2",
+    "@homielab/react-native-auto-scroll": "^0.0.10",
+    "@r0b0t3d/react-native-collapsible": "^1.4.3",
+    "@react-native-async-storage/async-storage": "^2.0.0",
+    "@react-native-community/geolocation": "^3.3.0",
+    "@react-native-masked-view/masked-view": "^0.3.1",
+    "@react-navigation/bottom-tabs": "^6.6.1",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
+    "axios": "^1.7.5",
+    "expo": "^51.0.0",
+    "expo-navigation-bar": "~3.0.7",
+    "lodash": "^4.17.21",
+    "lottie-react-native": "^5.1.6",
     "react": "18.3.1",
     "react-native": "0.75.2"
   },
@@ -32,5 +46,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@3.6.4"
 }

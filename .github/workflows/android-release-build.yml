@@ -26,15 +26,33 @@ jobs:
       
       - name: Install Dependencies
         run: npm install
+        
+      - name: Decode Keystore File
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/my-upload-key.keystore
+
+      - name: Setup .env file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" | base64 -d > .env
       
       - name: Set up local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+
+      - name: Add Keystore Credentials
+        run: |
+          echo "MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> android/gradle.properties
       
       - name: Make gradlew executable
         run: chmod +x android/gradlew
       
       - name: Build Unsigned Release APK
         run: cd android && ./gradlew assembleRelease
+
+      - name: List APK files
+        run: find android/app/build/outputs/apk -type f
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4

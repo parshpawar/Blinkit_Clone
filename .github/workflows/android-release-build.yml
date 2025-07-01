@@ -30,6 +30,9 @@ jobs:
       - name: Set up local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
       
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+      
       - name: Build Unsigned Release APK
         run: cd android && ./gradlew assembleRelease
 

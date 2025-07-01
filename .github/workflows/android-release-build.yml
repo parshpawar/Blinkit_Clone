@@ -1,0 +1,40 @@
+name: android-release-build.yml
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  build:
+    name: Build Unsigned Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: setup Node.jobs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: Install Dependencies
+        run: npm Install
+      
+      - name: Set up local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+      
+      - name: Build Unsigned Release APK
+        run: cd android && ./gradlew assembleRelease
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: unsigned-release-apk
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apl 
